@@ -1,0 +1,12 @@
+C:\Users\home\source\repos\Shop\Shop.Services.Abstract\bin\Debug\netcoreapp2.2\Shop.Services.Abstract.deps.json
+C:\Users\home\source\repos\Shop\Shop.Services.Abstract\bin\Debug\netcoreapp2.2\Shop.Services.Abstract.dll
+C:\Users\home\source\repos\Shop\Shop.Services.Abstract\bin\Debug\netcoreapp2.2\Shop.Services.Abstract.pdb
+C:\Users\home\source\repos\Shop\Shop.Services.Abstract\obj\Debug\netcoreapp2.2\Shop.Services.Abstract.csprojAssemblyReference.cache
+C:\Users\home\source\repos\Shop\Shop.Services.Abstract\obj\Debug\netcoreapp2.2\Shop.Services.Abstract.csproj.CoreCompileInputs.cache
+C:\Users\home\source\repos\Shop\Shop.Services.Abstract\obj\Debug\netcoreapp2.2\Shop.Services.Abstract.AssemblyInfoInputs.cache
+C:\Users\home\source\repos\Shop\Shop.Services.Abstract\obj\Debug\netcoreapp2.2\Shop.Services.Abstract.AssemblyInfo.cs
+C:\Users\home\source\repos\Shop\Shop.Services.Abstract\obj\Debug\netcoreapp2.2\Shop.Services.Abstract.dll
+C:\Users\home\source\repos\Shop\Shop.Services.Abstract\obj\Debug\netcoreapp2.2\Shop.Services.Abstract.pdb
+C:\Users\home\source\repos\Shop\Shop.Services.Abstract\bin\Debug\netcoreapp2.2\Shop.Domain.dll
+C:\Users\home\source\repos\Shop\Shop.Services.Abstract\bin\Debug\netcoreapp2.2\Shop.Domain.pdb
+C:\Users\home\source\repos\Shop\Shop.Services.Abstract\obj\Debug\netcoreapp2.2\Shop.Services.Abstract.csproj.CopyComplete

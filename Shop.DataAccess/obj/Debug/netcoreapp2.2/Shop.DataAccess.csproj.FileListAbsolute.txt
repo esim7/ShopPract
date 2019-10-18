@@ -1,0 +1,14 @@
+C:\Users\home\source\repos\Shop\Shop.DataAccess\bin\Debug\netcoreapp2.2\Shop.DataAccess.Abstract.dll
+C:\Users\home\source\repos\Shop\Shop.DataAccess\bin\Debug\netcoreapp2.2\Shop.Domain.dll
+C:\Users\home\source\repos\Shop\Shop.DataAccess\obj\Debug\netcoreapp2.2\Shop.DataAccess.csprojAssemblyReference.cache
+C:\Users\home\source\repos\Shop\Shop.DataAccess\obj\Debug\netcoreapp2.2\Shop.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\home\source\repos\Shop\Shop.DataAccess\obj\Debug\netcoreapp2.2\Shop.DataAccess.AssemblyInfoInputs.cache
+C:\Users\home\source\repos\Shop\Shop.DataAccess\obj\Debug\netcoreapp2.2\Shop.DataAccess.AssemblyInfo.cs
+C:\Users\home\source\repos\Shop\Shop.DataAccess\bin\Debug\netcoreapp2.2\Shop.DataAccess.deps.json
+C:\Users\home\source\repos\Shop\Shop.DataAccess\bin\Debug\netcoreapp2.2\Shop.DataAccess.dll
+C:\Users\home\source\repos\Shop\Shop.DataAccess\bin\Debug\netcoreapp2.2\Shop.DataAccess.pdb
+C:\Users\home\source\repos\Shop\Shop.DataAccess\bin\Debug\netcoreapp2.2\Shop.DataAccess.Abstract.pdb
+C:\Users\home\source\repos\Shop\Shop.DataAccess\bin\Debug\netcoreapp2.2\Shop.Domain.pdb
+C:\Users\home\source\repos\Shop\Shop.DataAccess\obj\Debug\netcoreapp2.2\Shop.DataAccess.csproj.CopyComplete
+C:\Users\home\source\repos\Shop\Shop.DataAccess\obj\Debug\netcoreapp2.2\Shop.DataAccess.dll
+C:\Users\home\source\repos\Shop\Shop.DataAccess\obj\Debug\netcoreapp2.2\Shop.DataAccess.pdb
