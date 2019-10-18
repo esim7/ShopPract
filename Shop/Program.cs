@@ -85,6 +85,99 @@ namespace Shop.UI
             //users = repository.Users.GetAll();
             //user = users.ElementAt(4);
             //repository.Users.Update(user, "email", "dota2");
+
+            List<Category> categories = new List<Category>
+            {
+                new Category
+                {
+                    Name = "Процессоры",
+                    ImagePath = @"C:\DataImage"
+                },
+                new Category
+                {
+                    Name = "Видеокарты",
+                    ImagePath = @"C:\DataImage"
+                },
+                new Category
+                {
+                    Name = "Оперативная память",
+                    ImagePath = @"C:\DataImage"
+                },
+                new Category
+                {
+                    Name = "Материнские платы",
+                    ImagePath = @"C:\DataImage"
+                },
+                new Category
+                {
+                    Name = "Жесткие диски",
+                    ImagePath = @"C:\DataImage"
+                },
+                new Category
+                {
+                    Name = "Твердотельные накопители",
+                    ImagePath = @"C:\DataImage"
+                },
+                new Category
+                {
+                    Name = "Блоки питания",
+                    ImagePath = @"C:\DataImage"
+                },
+                new Category
+                {
+                    Name = "Корпуса",
+                    ImagePath = @"C:\DataImage"
+                },
+                new Category
+                {
+                    Name = "Мониторы",
+                    ImagePath = @"C:\DataImage"
+                },
+                new Category
+                {
+                    Name = "Мобильные телефоны",
+                    ImagePath = @"C:\DataImage"
+                },
+                new Category
+                {
+                    Name = "Планшеты",
+                    ImagePath = @"C:\DataImage"
+                },
+                new Category
+                {
+                    Name = "Кулеры для процессора",
+                    ImagePath = @"C:\DataImage"
+                },
+                 new Category
+                {
+                    Name = "Принтеры",
+                    ImagePath = @"C:\DataImage"
+                },
+                  new Category
+                {
+                    Name = "Наушники и гарнитуры",
+                    ImagePath = @"C:\DataImage"
+                },
+                   new Category
+                {
+                    Name = "Флэш накопители и карты памяти",
+                    ImagePath = @"C:\DataImage"
+                },
+                     new Category
+                {
+                    Name = "Серверы",
+                    ImagePath = @"C:\DataImage"
+                }
+            };
+            Connection conect = new Connection();
+            conect.ConnectToDb();
+            WholeRepository repository = new WholeRepository(conect.providerName, conect.configurationRoot.GetConnectionString("DebugConnectionString"));
+            for(int i = 0; i < categories.Count; i++)
+            {
+                repository.Categories.Add(categories[i]);
+            }
+            repository.Dispose();
+
         }
     }
 }

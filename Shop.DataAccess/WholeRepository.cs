@@ -14,7 +14,7 @@ namespace Shop.DataAccess
 
         public UserRepository Users { get; set; }
         //public ItemRepository Items { get; set; }
-        //public CategoryRepository Categories { get; set; }
+        public CategoryRepository Categories { get; set; }
         // в конструкторе открываем подключение
         // реализуем айдиспозабл
         // создаем переменные для каждого из наших репозиториев, которые пользуются единим подключение
@@ -27,7 +27,7 @@ namespace Shop.DataAccess
 
             Users = new UserRepository(connection);
             ////Items = new ItemRepository(connection);
-            //Categories = new CategoryRepository(connection);
+            Categories = new CategoryRepository(connection);
             connection.Open();
         }
 
