@@ -1,138 +1,167 @@
-﻿//using Shop.DataAccess.Abstract;
-//using Shop.Domain;
-//using System;
-//using System.Collections.Generic;
-//using System.Data.Common;
-//using System.Text;
+﻿using Shop.DataAccess.Abstract;
+using Shop.Domain;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Text;
 
-//namespace Shop.DataAccess
-//{
-//    public class ItemRepository : IItemRepository
-//    {
-//        private readonly DbConnection connection;
+namespace Shop.DataAccess
+{
+    public class ItemRepository : IItemRepository
+    {
+        private readonly DbConnection connection;
 
-//        public ItemRepository(DbConnection connection)
-//        {
-//            //this.connection = connection;
-//        }
+        public ItemRepository(DbConnection connection)
+        {
+            this.connection = connection;
+        }
 
-//        //public void Add(Item item)
-//        //{
-//        //    using (DbConnection connection = providerFactory.CreateConnection())
-//        //    using (DbCommand sqlCommand = connection.CreateCommand())
-//        //    {
-//        //        string query = $"insert into Items (id, creationDate, name, imagePath, price, description, categoryId) values(@Id, " +
-//        //                $"@CreationDate, " +
-//        //                $"@Name," +
-//        //                $"@ImagePath" +
-//        //                $"Price" +
-//        //                $"Description" +
-//        //                $"CategoryId);";
-//        //        sqlCommand.CommandText = query;
+        public void Add(Item item)
+        {
+            using (DbCommand dbCommand = connection.CreateCommand())
+            {
+                string query = $"insert into Items (id, creationDate, name, imagePath, price, description, categoryId) values(@Id, " +
+                        $"@CreationDate, " +
+                        $"@Name," +
+                        $"@ImagePath" +
+                        $"Price" +
+                        $"Description" +
+                        $"CategoryId);";
+                dbCommand.CommandText = query;
 
-//        //        DbParameter parameter = providerFactory.CreateParameter();
-//        //        parameter.DbType = System.Data.DbType.Guid;
-//        //        parameter.ParameterName = "@Id";
-//        //        parameter.Value = item.Id;
-//        //        sqlCommand.Parameters.Add(parameter);
+                DbParameter parameter = dbCommand.CreateParameter();
+                parameter.DbType = System.Data.DbType.Guid;
+                parameter.ParameterName = "@Id";
+                parameter.Value = item.Id;
+                dbCommand.Parameters.Add(parameter);
 
-//        //        parameter = providerFactory.CreateParameter();
-//        //        parameter.DbType = System.Data.DbType.DateTime;
-//        //        parameter.ParameterName = "@CreationDate";
-//        //        parameter.Value = item.CreationDate;
-//        //        sqlCommand.Parameters.Add(parameter);
+                parameter = dbCommand.CreateParameter();
+                parameter.DbType = System.Data.DbType.DateTime;
+                parameter.ParameterName = "@CreationDate";
+                parameter.Value = item.CreationDate;
+                dbCommand.Parameters.Add(parameter);
 
-//        //        parameter = providerFactory.CreateParameter();
-//        //        parameter.DbType = System.Data.DbType.String;
-//        //        parameter.ParameterName = "@Name";
-//        //        parameter.Value = item.Name;
-//        //        sqlCommand.Parameters.Add(parameter);
+                parameter = dbCommand.CreateParameter();
+                parameter.DbType = System.Data.DbType.String;
+                parameter.ParameterName = "@Name";
+                parameter.Value = item.Name;
+                dbCommand.Parameters.Add(parameter);
 
-//        //        parameter = providerFactory.CreateParameter();
-//        //        parameter.DbType = System.Data.DbType.String;
-//        //        parameter.ParameterName = "@ImagePath";
-//        //        parameter.Value = item.ImagePath;
-//        //        sqlCommand.Parameters.Add(parameter);
+                parameter = dbCommand.CreateParameter();
+                parameter.DbType = System.Data.DbType.String;
+                parameter.ParameterName = "@ImagePath";
+                parameter.Value = item.ImagePath;
+                dbCommand.Parameters.Add(parameter);
 
-//        //        parameter = providerFactory.CreateParameter();
-//        //        parameter.DbType = System.Data.DbType.Int32;
-//        //        parameter.ParameterName = "@Price";
-//        //        parameter.Value = item.Price;
-//        //        sqlCommand.Parameters.Add(parameter);
+                parameter = dbCommand.CreateParameter();
+                parameter.DbType = System.Data.DbType.Int32;
+                parameter.ParameterName = "@Price";
+                parameter.Value = item.Price;
+                dbCommand.Parameters.Add(parameter);
 
-//        //        parameter = providerFactory.CreateParameter();
-//        //        parameter.DbType = System.Data.DbType.String;
-//        //        parameter.ParameterName = "@Description";
-//        //        parameter.Value = item.Description;
-//        //        sqlCommand.Parameters.Add(parameter);
+                parameter = dbCommand.CreateParameter();
+                parameter.DbType = System.Data.DbType.String;
+                parameter.ParameterName = "@Description";
+                parameter.Value = item.Description;
+                dbCommand.Parameters.Add(parameter);
 
-//        //        parameter = providerFactory.CreateParameter();
-//        //        parameter.DbType = System.Data.DbType.Guid;
-//        //        parameter.ParameterName = "@CategoryId";
-//        //        parameter.Value = item.CategoryId;
-//        //        sqlCommand.Parameters.Add(parameter);
+                parameter = dbCommand.CreateParameter();
+                parameter.DbType = System.Data.DbType.Guid;
+                parameter.ParameterName = "@CategoryId";
+                parameter.Value = item.CategoryId;
+                dbCommand.Parameters.Add(parameter);
 
-//        //        connection.ConnectionString = connectionString;
-//        //        connection.Open();
+                using (DbTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        dbCommand.Transaction = transaction;
+                        dbCommand.ExecuteNonQuery();
+                        // и так далее тоже самое с другими командами
 
-//        //        using (DbTransaction transaction = connection.BeginTransaction())
-//        //        {
-//        //            try
-//        //            {
-//        //                sqlCommand.Transaction = transaction;
-//        //                sqlCommand.ExecuteNonQuery();
-//        //                // и так далее тоже самое с другими командами
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+        }
 
-//        //                transaction.Commit();
-//        //            }
-//        //            catch
-//        //            {
-//        //                transaction.Rollback();
-//        //            }
-//        //        }
-//        //    }
-//        //}
+        public void Delete(Guid itemId)
+        {
+            throw new NotImplementedException();
+        }
 
-//        public void Delete(Guid itemId)
-//        {
-//            throw new NotImplementedException();
-//        }
+        public ICollection<Item> GetAll()
+        {
+            using (DbCommand dbCommand = connection.CreateCommand())
+            {
+                string query = "select * from Items;";
+                dbCommand.CommandText = query;
 
-//        //public ICollection<Item> GetAll()
-//        //{
-//        //    using (DbConnection connection = providerFactory.CreateConnection())
-//        //    using (DbCommand sqlCommand = connection.CreateCommand())
-//        //    {
-//        //        string query = "select * from Items;";
-//        //        sqlCommand.CommandText = query;
+                //connection.ConnectionString = connectionString;
+                //connection.Open();
+                DbDataReader bdDataReader = dbCommand.ExecuteReader();
 
-//        //        connection.ConnectionString = connectionString;
-//        //        connection.Open();
-//        //        DbDataReader sqlDataReader = sqlCommand.ExecuteReader();
+                List<Item> items = new List<Item>();
+                while (bdDataReader.Read())
+                {
+                    items.Add(new Item
+                    {
+                        Id = Guid.Parse(bdDataReader["id"].ToString()),
+                        CreationDate = DateTime.Parse(bdDataReader["creationDate"].ToString()),
+                        //DeletedDate = DateTime.Parse(sqlDataReader["deletedDate"].ToString()),
+                        Name = bdDataReader["name"].ToString(),
+                        ImagePath = bdDataReader["imagePath"].ToString(),
+                        Price = Int32.Parse(bdDataReader["Price"].ToString()),
+                        Description = bdDataReader["description"].ToString(),
+                        CategoryId = Guid.Parse(bdDataReader["categoryId"].ToString())
+                    });
+                }
+                bdDataReader.Close();
+                return items;
+            }
+        }
 
-//        //        List<Item> items = new List<Item>();
-//        //        while (sqlDataReader.Read())
-//        //        {
-//        //            items.Add(new Item
-//        //            {
-//        //                Id = Guid.Parse(sqlDataReader["id"].ToString()),
-//        //                CreationDate = DateTime.Parse(sqlDataReader["creationDate"].ToString()),
-//        //                //DeletedDate = DateTime.Parse(sqlDataReader["deletedDate"].ToString()),
-//        //                //DeletedDate = DateTime.Parse(sqlDataReader["deletedDate"].ToString()),
-//        //                Name = sqlDataReader["name"].ToString(),
-//        //                ImagePath = sqlDataReader["imagePath"].ToString(),
-//        //                Price = Int32.Parse(sqlDataReader["price"].ToString()),
-//        //                Description = sqlDataReader["description"].ToString(),
-//        //                CategoryId = Guid.Parse(sqlDataReader["categoryId"].ToString())
-//        //            });
-//        //        }
-//        //        return items;
-//        //    }
-//        //}
+        public void Update(Item item, string column, string newInformation)
+        {
+            string query = $"update Items set {column} = '{newInformation}' where id = '{item.Id}';";
+            using (DbCommand dbCommand = connection.CreateCommand())
+            {
+                dbCommand.CommandText = query;
+                dbCommand.ExecuteNonQuery();
+            }
+        }
 
-//        public void Update(Item item)
-//        {
-//            throw new NotImplementedException();
-//        }
-//    }
-//}
+        public ICollection GetDataInDb(int pageNumber)
+        {
+            int objectPerPageSize = 3;
+            --pageNumber;
+            using (DbCommand dbCommand = connection.CreateCommand())
+            {
+                string query = "SELECT * FROM Items ORDER BY id OFFSET ((" + pageNumber + ") * " + objectPerPageSize + ") " +
+                "ROWS FETCH NEXT " + objectPerPageSize + " ROWS ONLY";
+                dbCommand.CommandText = query;
+
+                DbDataReader bdDataReader = dbCommand.ExecuteReader();
+                List<Item> paginationShow = new List<Item>();
+                while (bdDataReader.Read())
+                {
+                    paginationShow.Add(new Item
+                    {
+                        Name = bdDataReader["name"].ToString(),
+                        Price = Int32.Parse(bdDataReader["name"].ToString()),
+                        ImagePath = bdDataReader["imagePath"].ToString(),
+                        Description = bdDataReader["description"].ToString()
+
+                    });
+                }
+                bdDataReader.Close();
+                return paginationShow;
+            }
+        }
+    }
+}

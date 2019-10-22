@@ -5,6 +5,8 @@ using System.Text;
 using Shop.DataAccess.Abstract;
 using System.Data.SqlClient;
 using System.Data.Common;
+using System.Linq;
+using System.Collections;
 
 namespace Shop.DataAccess
 {
@@ -111,6 +113,31 @@ namespace Shop.DataAccess
             {
                 dbCommand.CommandText = query;
                 dbCommand.ExecuteNonQuery();
+            }
+        }
+
+        public ICollection GetDataInDb(int pageNumber)
+        {
+            int objectPerPageSize = 3;
+            --pageNumber;
+            using (DbCommand dbCommand = connection.CreateCommand())
+            {
+                string query = "SELECT * FROM Categories ORDER BY id OFFSET ((" + pageNumber + ") * " + objectPerPageSize + ") " +
+                "ROWS FETCH NEXT " + objectPerPageSize + " ROWS ONLY";
+                dbCommand.CommandText = query;
+
+                DbDataReader bdDataReader = dbCommand.ExecuteReader();
+                List<Category> paginationShow = new List<Category>();
+                while (bdDataReader.Read())
+                {
+                    paginationShow.Add(new Category
+                    {
+                        Name = bdDataReader["name"].ToString(),
+                        ImagePath = bdDataReader["imagePath"].ToString()
+                    });
+                }
+                bdDataReader.Close();
+                return paginationShow;
             }
         }
     }

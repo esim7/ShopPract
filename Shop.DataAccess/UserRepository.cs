@@ -76,7 +76,6 @@ namespace Shop.DataAccess
                     {
                         dbCommand.Transaction = transaction;
                         dbCommand.ExecuteNonQuery();
-                        // и так далее тоже самое с другими командами
 
                         transaction.Commit();
                     }
@@ -95,14 +94,11 @@ namespace Shop.DataAccess
 
         public ICollection<User> GetAll()
         {
-            //using (DbConnection connection = providerFactory.CreateConnection())
             using (DbCommand dbCommand = connection.CreateCommand())
             {
                 string query = "select * from Users;";
                 dbCommand.CommandText = query;
 
-                //connection.ConnectionString = connectionString;
-                //connection.Open();
                 DbDataReader bdDataReader = dbCommand.ExecuteReader();
 
                 List<User> users = new List<User>();

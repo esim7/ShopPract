@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Text;
 using System.Data.SqlClient;
-
+using System.Linq;
 
 namespace Shop.DataAccess
 {
@@ -15,9 +15,6 @@ namespace Shop.DataAccess
         public UserRepository Users { get; set; }
         //public ItemRepository Items { get; set; }
         public CategoryRepository Categories { get; set; }
-        // в конструкторе открываем подключение
-        // реализуем айдиспозабл
-        // создаем переменные для каждого из наших репозиториев, которые пользуются единим подключение
         public WholeRepository(string providerName, string connectionString)
         {
             providerFactory = DbProviderFactories.GetFactory(providerName);
@@ -35,5 +32,10 @@ namespace Shop.DataAccess
         {
             connection.Close();
         }
+
+        //public void Find()
+        //{
+        //    IQueryable<WholeRepository> result = from c in  
+        //}
     }
 }
