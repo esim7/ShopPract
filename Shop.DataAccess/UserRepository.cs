@@ -19,13 +19,15 @@ namespace Shop.DataAccess
         {
             using (DbCommand dbCommand = connection.CreateCommand())
             {
-                string query = $"insert into Users (id, creationDate, phoneNumber, email, address, password, verificationCode) values(@Id, " +
+                string query = $"insert into Users (id, creationDate, login, phoneNumber, email, address, password, verificationCode) values(@Id, " +
                         $"@CreationDate, " +
+                        $"@Login, " +
                         $"@PhoneNumber, " +
                         $"@Email, " +
                         $"@Address, " +
                         $"@Password, " +
                         $"@VerificationCode);";
+
                 dbCommand.CommandText = query;
 
                 DbParameter parameter = dbCommand.CreateParameter();
@@ -38,6 +40,12 @@ namespace Shop.DataAccess
                 parameter.DbType = System.Data.DbType.DateTime;
                 parameter.ParameterName = "@CreationDate";
                 parameter.Value = user.CreationDate;
+                dbCommand.Parameters.Add(parameter);
+
+                parameter = dbCommand.CreateParameter();
+                parameter.DbType = System.Data.DbType.String;
+                parameter.ParameterName = "@Login";
+                parameter.Value = user.Login;
                 dbCommand.Parameters.Add(parameter);
 
                 parameter = dbCommand.CreateParameter();
@@ -109,6 +117,7 @@ namespace Shop.DataAccess
                         Id = Guid.Parse(bdDataReader["id"].ToString()),
                         CreationDate = DateTime.Parse(bdDataReader["creationDate"].ToString()),
                         //DeletedDate = DateTime.Parse(sqlDataReader["deletedDate"].ToString()),
+                        Login = bdDataReader["login"].ToString(),
                         PhoneNumber = bdDataReader["phoneNumber"].ToString(),
                         Email = bdDataReader["email"].ToString(),
                         Address = bdDataReader["address"].ToString(),

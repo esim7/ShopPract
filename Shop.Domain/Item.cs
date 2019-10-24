@@ -12,6 +12,9 @@ namespace Shop.Domain
         public string Description { get; set; }
         public Guid CategoryId { get; set; }
 
-        // рейтинг, комментарии, категория
+        public Item()
+        {
+            //Rating = new List<Rating>();
+        }
     }
 }

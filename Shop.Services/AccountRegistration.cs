@@ -24,6 +24,8 @@ namespace Shop.Services
         }
         public void Registration(User user)
         {
+            Console.WriteLine("Введите логин");
+            user.Login = Console.ReadLine();
             Console.WriteLine("Введите Ваш номер телефона в формате +7**********");
             user.PhoneNumber = Console.ReadLine();
             Console.WriteLine("Введите пароль");

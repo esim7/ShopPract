@@ -21,7 +21,6 @@ namespace Shop.DataAccess
 
         public void Add(Category category)
         {
-            //using (DbConnection connection = providerFactory.CreateConnection())
             using (DbCommand dbCommand = connection.CreateCommand())
             {
                 string query = $"insert into Categories (id, creationDate, name, imagePath) values(@Id, " +
@@ -117,15 +116,19 @@ namespace Shop.DataAccess
         }
 
         public ICollection GetDataInDb(int pageNumber)
-        {
+        {           
             int objectPerPageSize = 3;
             --pageNumber;
+            if(pageNumber < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             using (DbCommand dbCommand = connection.CreateCommand())
             {
                 string query = "SELECT * FROM Categories ORDER BY id OFFSET ((" + pageNumber + ") * " + objectPerPageSize + ") " +
                 "ROWS FETCH NEXT " + objectPerPageSize + " ROWS ONLY";
                 dbCommand.CommandText = query;
-
+               
                 DbDataReader bdDataReader = dbCommand.ExecuteReader();
                 List<Category> paginationShow = new List<Category>();
                 while (bdDataReader.Read())
@@ -136,6 +139,7 @@ namespace Shop.DataAccess
                         ImagePath = bdDataReader["imagePath"].ToString()
                     });
                 }
+
                 bdDataReader.Close();
                 return paginationShow;
             }

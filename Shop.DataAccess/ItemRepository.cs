@@ -23,11 +23,11 @@ namespace Shop.DataAccess
             {
                 string query = $"insert into Items (id, creationDate, name, imagePath, price, description, categoryId) values(@Id, " +
                         $"@CreationDate, " +
-                        $"@Name," +
-                        $"@ImagePath" +
-                        $"Price" +
-                        $"Description" +
-                        $"CategoryId);";
+                        $"@Name, " +
+                        $"@ImagePath, " +
+                        $"@Price, " +
+                        $"@Description, " +
+                        $"@CategoryId);";
                 dbCommand.CommandText = query;
 
                 DbParameter parameter = dbCommand.CreateParameter();
@@ -72,6 +72,45 @@ namespace Shop.DataAccess
                 parameter.Value = item.CategoryId;
                 dbCommand.Parameters.Add(parameter);
 
+                //for(int i = 0; i < item.Rating.Count; i++)
+                //{
+                //    parameter = dbCommand.CreateParameter();
+                //    parameter.DbType = System.Data.DbType.Guid;
+                //    parameter.ParameterName = "@Id";
+                //    parameter.Value = item.Rating[i].Id;
+                //    dbCommand.Parameters.Add(parameter);
+
+                //    parameter = dbCommand.CreateParameter();
+                //    parameter.DbType = System.Data.DbType.DateTime;
+                //    parameter.ParameterName = "@CreationDate";
+                //    parameter.Value = item.Rating[i].CreationDate;
+                //    dbCommand.Parameters.Add(parameter);
+
+                //    parameter = dbCommand.CreateParameter();
+                //    parameter.DbType = System.Data.DbType.String;
+                //    parameter.ParameterName = "@UserName";
+                //    parameter.Value = item.Rating[i].UserName;
+                //    dbCommand.Parameters.Add(parameter);
+
+                //    parameter = dbCommand.CreateParameter();
+                //    parameter.DbType = System.Data.DbType.Guid;
+                //    parameter.ParameterName = "@ItemId";
+                //    parameter.Value = item.Rating[i].ItemId;
+                //    dbCommand.Parameters.Add(parameter);
+
+                //    parameter = dbCommand.CreateParameter();
+                //    parameter.DbType = System.Data.DbType.Int32;
+                //    parameter.ParameterName = "@Mark";
+                //    parameter.Value = item.Rating[i].Mark;
+                //    dbCommand.Parameters.Add(parameter);
+                //}
+                //parameter = dbCommand.CreateParameter();
+                //parameter.DbType = System.Data.DbType.String;
+                //parameter.ParameterName = "@Comentary";
+                //parameter.Value = item.Comentary;
+                //dbCommand.Parameters.Add(parameter);
+
+
                 using (DbTransaction transaction = connection.BeginTransaction())
                 {
                     try
@@ -105,6 +144,7 @@ namespace Shop.DataAccess
                 //connection.ConnectionString = connectionString;
                 //connection.Open();
                 DbDataReader bdDataReader = dbCommand.ExecuteReader();
+                
 
                 List<Item> items = new List<Item>();
                 while (bdDataReader.Read())
@@ -136,10 +176,14 @@ namespace Shop.DataAccess
             }
         }
 
-        public ICollection GetDataInDb(int pageNumber)
+        public ICollection <Item>GetDataInDb(int pageNumber)
         {
             int objectPerPageSize = 3;
             --pageNumber;
+            if (pageNumber < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             using (DbCommand dbCommand = connection.CreateCommand())
             {
                 string query = "SELECT * FROM Items ORDER BY id OFFSET ((" + pageNumber + ") * " + objectPerPageSize + ") " +
@@ -152,11 +196,11 @@ namespace Shop.DataAccess
                 {
                     paginationShow.Add(new Item
                     {
+                        Id = Guid.Parse(bdDataReader["id"].ToString()),
                         Name = bdDataReader["name"].ToString(),
-                        Price = Int32.Parse(bdDataReader["name"].ToString()),
+                        Price = Int32.Parse(bdDataReader["price"].ToString()),
                         ImagePath = bdDataReader["imagePath"].ToString(),
                         Description = bdDataReader["description"].ToString()
-
                     });
                 }
                 bdDataReader.Close();
