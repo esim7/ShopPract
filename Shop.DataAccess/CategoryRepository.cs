@@ -114,7 +114,11 @@ namespace Shop.DataAccess
                 dbCommand.ExecuteNonQuery();
             }
         }
-
+        /// <summary>
+        /// Метод организующий постраничный вывод информации из БД(пагинация)
+        /// </summary>
+        /// <param name="pageNumber">принимает номер страницы которую следует вывести на экран</param>
+        /// <returns></returns>
         public ICollection GetDataInDb(int pageNumber)
         {           
             int objectPerPageSize = 3;

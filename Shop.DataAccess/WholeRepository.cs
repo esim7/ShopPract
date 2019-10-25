@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace Shop.DataAccess
 {
+    /// <summary>
+    /// Единый инструмент организующий манипуляции в базе данных для всех сущностей
+    /// </summary>
     public class WholeRepository : IDisposable
     {
         public readonly DbConnection connection;

@@ -18,7 +18,10 @@ namespace Shop.Services
         {
             isVerificated = false;
         }
-
+        /// <summary>
+        /// Метод принимающий номер телефона абонента и отправляющий на него коде верификации
+        /// </summary>
+        /// <param name="phoneNumber">в качестве параметра передается действующий номер</param>
         public void VerificationCodeSender(string phoneNumber)
         {
             string AccountSid = "AC8342d8d4276f3b549f9f2ca00a2c0d0a";
@@ -37,7 +40,10 @@ namespace Shop.Services
                 from: from,
                 body: this.VerificationCode);
         }
-
+        /// <summary>
+        /// метод проверяет код верификации отправленный на номер телефона. Если код введен верно дает разрешение на регистрацию аккаунта в БД
+        /// </summary>
+        /// <param name="verificationCode"></param>
         public void VerificationChecker(string verificationCode)
         {
             if(this.VerificationCode == verificationCode)

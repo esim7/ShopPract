@@ -175,7 +175,11 @@ namespace Shop.DataAccess
                 dbCommand.ExecuteNonQuery();
             }
         }
-
+        /// <summary>
+        /// Метод организующий постраничный вывод информации из БД(пагинация)
+        /// </summary>
+        /// <param name="pageNumber">принимает номер страницы которую следует вывести на экран</param>
+        /// <returns></returns>
         public ICollection <Item>GetDataInDb(int pageNumber)
         {
             int objectPerPageSize = 3;
@@ -188,6 +192,41 @@ namespace Shop.DataAccess
             {
                 string query = "SELECT * FROM Items ORDER BY id OFFSET ((" + pageNumber + ") * " + objectPerPageSize + ") " +
                 "ROWS FETCH NEXT " + objectPerPageSize + " ROWS ONLY";
+                dbCommand.CommandText = query;
+
+                DbDataReader bdDataReader = dbCommand.ExecuteReader();
+                List<Item> paginationShow = new List<Item>();
+                while (bdDataReader.Read())
+                {
+                    paginationShow.Add(new Item
+                    {
+                        Id = Guid.Parse(bdDataReader["id"].ToString()),
+                        Name = bdDataReader["name"].ToString(),
+                        Price = Int32.Parse(bdDataReader["price"].ToString()),
+                        ImagePath = bdDataReader["imagePath"].ToString(),
+                        Description = bdDataReader["description"].ToString()
+                    });
+                }
+                bdDataReader.Close();
+                return paginationShow;
+            }
+        }
+
+        public ICollection<Item> Find(int pageNumber, string itemName)
+        {
+            int objectPerPageSize = 3;
+            --pageNumber;
+            if (pageNumber < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            using (DbCommand dbCommand = connection.CreateCommand())
+            {
+                //string query = "SELECT * FROM Items ORDER BY id OFFSET ((" + pageNumber + ") * " + objectPerPageSize + ") " +
+                //"ROWS FETCH NEXT " + objectPerPageSize + " ROWS ONLY";
+
+                string query = $"select * from Items where [name] like '%{itemName}%' ORDER BY id OFFSET ((" + pageNumber + ") * " + objectPerPageSize + ") " +
+                    "ROWS FETCH NEXT " + objectPerPageSize + "ROWS ONLY;";
                 dbCommand.CommandText = query;
 
                 DbDataReader bdDataReader = dbCommand.ExecuteReader();

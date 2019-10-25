@@ -22,6 +22,10 @@ namespace Shop.Services
             Connect.ConnectToDb();
             Repository = new WholeRepository(Connect.providerName, Connect.configurationRoot.GetConnectionString("DebugConnectionString"));
         }
+        /// <summary>
+        /// Метод регистрирующий новый аккаунт в базе данных, принимает обьект типа User
+        /// </summary>
+        /// <param name="user"></param>
         public void Registration(User user)
         {
             Console.WriteLine("Введите логин");

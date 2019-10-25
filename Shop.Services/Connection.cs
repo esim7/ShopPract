@@ -10,6 +10,9 @@ using System.Text;
 
 namespace Shop.Services
 {
+    /// <summary>
+    /// Класс "параметров" для организации подключения к базе данных
+    /// </summary>
     public class Connection : IConnect
     {
         public IConfigurationBuilder builder; 
